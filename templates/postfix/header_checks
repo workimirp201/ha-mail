@@ -1,0 +1,13 @@
+# ha-mail :: /etc/postfix/header_checks  (smtp_header_checks - OUTBOUND)
+#
+# Applied by the smtp(8) client to every message this node sends to the
+# internet. Keep this list tiny: anything expensive here runs once per
+# outbound message.
+
+# Some MUAs still emit a Bcc: header on submission. Postfix normally strips it
+# at cleanup, but a message re-injected from a script can carry one through.
+# Leaking a Bcc list is a privacy incident, so remove it unconditionally.
+/^Bcc:/                                 IGNORE
+
+# Never advertise the exact Postfix build to the internet.
+/^X-Mailer:\s*Postfix.*$/               IGNORE

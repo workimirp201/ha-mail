@@ -1,0 +1,17 @@
+[Unit]
+Description=ha-mail certificate synchronisation timer
+
+[Timer]
+# Twice a day, offset by a random 45 minutes.
+#
+# WHY THE RANDOM DELAY MATTERS: without it both nodes' timers fire at the same
+# wall-clock instant. On a pull-only design that is merely wasteful, but if
+# anyone ever "improves" the script into a bidirectional rsync, simultaneous
+# firing is precisely the condition that produces a sync loop. The jitter is
+# cheap insurance. See docs/AUDIT.md section 2.
+OnCalendar=*-*-* 03,15:20:00
+RandomizedDelaySec=45m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

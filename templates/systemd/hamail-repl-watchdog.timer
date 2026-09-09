@@ -1,0 +1,13 @@
+[Unit]
+Description=ha-mail replication watchdog timer
+
+[Timer]
+# Every 5 minutes. Replication breakage on a mail cluster is silent by nature:
+# both nodes keep accepting mail, they just stop agreeing about it. Five
+# minutes bounds how long that can go unnoticed.
+OnBootSec=3min
+OnUnitActiveSec=5min
+RandomizedDelaySec=30s
+
+[Install]
+WantedBy=timers.target

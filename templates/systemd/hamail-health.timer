@@ -1,0 +1,10 @@
+[Unit]
+Description=ha-mail cluster health check timer
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=15min
+RandomizedDelaySec=2m
+
+[Install]
+WantedBy=timers.target
